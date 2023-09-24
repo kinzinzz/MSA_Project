@@ -27,6 +27,12 @@ SECRET_KEY = 'django-insecure-h!l&amz=l%f*8@s%fr47s*(6dj^%rh50cfuwwa9c_sup3p2=ge
 DEBUG = str(os.environ.get('DEBUG')) == "1"
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS.extend(
+    filter(
+        None,
+        os.environ.get('ALLOWED_HOSTS', '').split(','),
+    )
+)
 
 
 # Application definition
@@ -43,8 +49,8 @@ INSTALLED_APPS = [
     'corsheaders',
     
     # app
-    'account',
-    'post'
+    'users',
+    'posts'
 ]
 
 MIDDLEWARE = [
