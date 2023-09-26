@@ -8,7 +8,7 @@ urlpatterns = [
         'get': 'list',
         'post': 'create'
     })),
-    path('/<str:pk>', PostViewSet.as_view({
+    path('<str:pk>', PostViewSet.as_view({
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy'

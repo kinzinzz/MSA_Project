@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import UniqueConstraint
+from flask_cors import CORS
 import requests
-
-
 import os
+
 # DB connection environment variable
 user = os.environ.get("POSTGRES_USER")
 password = os.environ.get("POSTGRES_PASSWORD")
@@ -22,6 +22,12 @@ class Post(db.Model):
     title = db.Column(db.String(200))
     image = db.Column(db.String(200))
 
+    def serialize(self):
+        return {
+        'id': self.id,
+        'title': self.title,
+        'image': self.image
+    }
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,7 +38,9 @@ class User(db.Model):
 
 @app.route('/api/post')
 def index():
-    return 'Hello'
-
+    posts = db.session.query(Post).all()
+    serialized_posts = [post.serialize() for post in posts]
+    return jsonify(serialized_posts)
+    
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')

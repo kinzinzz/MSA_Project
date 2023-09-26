@@ -15,6 +15,14 @@ services:
     volumes:
       - .:/app
 
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'python consumer.py'
+    depends_on:
+      - postgres_db
+
   postgres_db:
     image: postgres
     restart: always
