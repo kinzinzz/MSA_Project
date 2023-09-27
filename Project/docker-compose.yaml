@@ -19,6 +19,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
     command: 'python consumer.py'
     depends_on:
       - postgres_db

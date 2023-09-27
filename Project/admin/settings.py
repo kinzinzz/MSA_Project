@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-h!l&amz=l%f*8@s%fr47s*(6dj^%rh50cfuwwa9c_sup3p2=ge
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG')) == "1"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["host.docker.internal","127.0.0.1"]
 ALLOWED_HOSTS.extend(
     filter(
         None,
@@ -49,14 +49,13 @@ INSTALLED_APPS = [
     'corsheaders',
     
     # app
-    'users',
     'posts'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # CORS 추가
+    'corsheaders.middleware.CorsMiddleware', # CORS add
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,7 +98,6 @@ DB_IS_AVAIL = all([
 ])
 
 if DB_IS_AVAIL:
-    
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -155,7 +153,3 @@ CORS_ORIGIN_ALLOW_ALL = True # CORS Permission
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# User settings
-# AUTH_USER_MODEL = 'account.User'

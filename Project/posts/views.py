@@ -1,8 +1,10 @@
 from rest_framework import viewsets, status
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Post
+from .models import Post, User
 from .serializers import PostSerializer
 
+import random
 from .producer import publish 
 
 class PostViewSet(viewsets.ViewSet):
@@ -36,3 +38,12 @@ class PostViewSet(viewsets.ViewSet):
         product.delete()
         publish('post_deleted', pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserAPIView(APIView):
+    def get(self, _):
+        users = User.objects.all()
+        user = random.choice(users)
+        return Response({
+            'id': user.id
+        })
