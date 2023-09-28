@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostViewSet, UserAPIView
+from .views import PostViewSet
 
 app_name = 'posts'
 
@@ -12,6 +12,5 @@ urlpatterns = [
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy'
-    })),    
-    path('user', UserAPIView.as_view())
+    })),        
 ]

@@ -1,0 +1,56 @@
+version: "3"
+services:
+  postgres_db:
+    container_name: postgres_service
+    image: postgres
+    volumes:
+      - .postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    restart: always
+
+  django:
+    container_name: django_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command: >
+      sh -c "python3 manage.py migrate && 
+              python3 manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres_db
+      - redis
+      - rabbitmq
+    restart: always
+
+  redis:
+    container_name: redis_service
+    image: redis:alpine
+    env_file:
+      - .env
+    volumes:
+      - .redis_data:/var/lib/redis/data/
+    ports:
+      - "6379:6379"
+    depends_on:
+      - postgres_db
+    restart: always
+
+  rabbitmq:
+    container_name: rabbitmq_service
+    image: rabbitmq:alpine
+    env_file:
+      - .env
+    volumes:
+      - .rabbitmq_data:/var/lib/redis/data/
+    ports:
+      - "5672:5672"
+    restart: always
