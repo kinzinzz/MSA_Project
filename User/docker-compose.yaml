@@ -31,18 +31,18 @@ services:
       - rabbitmq
     restart: always
 
-  redis:
-    container_name: redis_service
-    image: redis:alpine
-    env_file:
-      - .env
-    volumes:
-      - .redis_data:/var/lib/redis/data/
-    ports:
-      - "6379:6379"
-    depends_on:
-      - postgres_db
-    restart: always
+  # redis:
+  #   container_name: redis_service
+  #   image: redis:alpine
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - .redis_data:/var/lib/redis/data/
+  #   ports:
+  #     - "6379:6379"
+  #   depends_on:
+  #     - postgres_db
+  #   restart: always
 
   rabbitmq:
     container_name: rabbitmq_service
