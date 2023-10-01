@@ -1,16 +1,25 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Markdown from './Markdown';
+import post1 from './post1.md';
 
 interface MainProps {
-    posts: ReadonlyArray<string>;
     title: string;
 }
 
-export default function Main(props: MainProps) {
-    const { posts, title } = props;
+export default function Main(prop: MainProps) {
+    const { title } = prop;
+    const [text, setText] = useState('')
+
+    useEffect(() => {
+        fetch(post1)
+            .then((response) => response.text())
+            .then((md) => {
+                setText(md)
+            })
+    }, [])
 
     return (
         <Grid
@@ -27,11 +36,11 @@ export default function Main(props: MainProps) {
                 {title}
             </Typography>
             <Divider />
-            {posts.map((post) => (
-                <Markdown className="markdown" key={post.substring(0, 40)}>
-                    {post}
-                </Markdown>
-            ))}
+
+            <Markdown className="markdown" key={text.substring(0, 40)}>
+                {text}
+            </Markdown>
+
         </Grid>
     );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -12,9 +12,7 @@ import Footer from '../src/components/Footer/Footer';
 import FeaturedPost from '../src/components/FeaturedPost/FeaturedPost';
 import MainFeaturedPost from '../src/components/MainFeaturedPost/MainFeaturedPost';
 import Sidebar from '../src/components/Sidebar/Sidebar';
-import Post1 from './post1.md';
-import Post2 from './post2.md';
-import Post3 from './post3.md';
+
 
 const sections = [
   { title: 'Technology', url: '#' },
@@ -55,9 +53,24 @@ const featuredPosts = [
     image: 'https://source.unsplash.com/random?wallpapers',
     imageLabel: 'Image Text',
   },
+  {
+    title: 'Post title',
+    date: 'Nov 11',
+    description:
+      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+    image: 'https://source.unsplash.com/random?wallpapers',
+    imageLabel: 'Image Text',
+  },
+  {
+    title: 'Post title',
+    date: 'Nov 11',
+    description:
+      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+    image: 'https://source.unsplash.com/random?wallpapers',
+    imageLabel: 'Image Text',
+  },
 ];
 
-const posts = [Post1, Post2, Post3];
 
 const sidebar = {
   title: 'About',
@@ -87,6 +100,7 @@ const sidebar = {
 const defaultTheme = createTheme();
 
 export default function Blog() {
+  // console.log(MyComponent())
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -100,7 +114,7 @@ export default function Blog() {
             ))}
           </Grid>
           <Grid container spacing={5} sx={{ mt: 3 }}>
-            <Main title="From the firehose" posts={posts} />
+            <Main title="From the firehose" />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}
