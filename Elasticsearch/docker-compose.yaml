@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  postgres_db:
+    container_name: search_db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+
+  django:
+    container_name: django_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command: >
+      sh -c "python3 manage.py migrate && 
+              python3 manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8004:8000"
+    depends_on:
+      - postgres_db
+      - es
+    restart: always
+
+  es:
+    container_name: es
+    image: elasticsearch:7.14.2
+    env_file:
+      - .env
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+    restart: always
